@@ -29,6 +29,8 @@ task ( index <- bam ) {
   sys samtools index $bam $index
 }
 
-task ( vcf <- [index, bam, sam] )
+task ( vcf <- [index, bam, sam, ref] ) {
+  sys samtools mpileup -uf $ref $bam | bcftools view > $vcf
+}
 
 
