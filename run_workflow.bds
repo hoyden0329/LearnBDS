@@ -10,7 +10,7 @@ bam := fa1.swapExt('0.1.fastq', 'bam')
 vcf := fa1.swapExt('0.1.fastq', 'vcf')
 index := fa1.swapExt('0.1.fastq', 'bai')
 
-println "fa1 = $fa1"
+# println "fa1 = $fa1"
 
 task ( idx <- ref ) {
   sys bwa index $ref
@@ -32,5 +32,3 @@ task ( index <- bam ) {
 task ( vcf <- [index, bam, sam, ref] ) {
   sys samtools mpileup -uf $ref $bam | bcftools view > $vcf
 }
-
-
