@@ -1,0 +1,257 @@
+<html lang="en">
+<head>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style type="text/css">
+		pre {
+			width:1200px;
+			overflow: auto;
+			word-wrap: normal;
+			white-space: pre;
+		}
+	</style>    
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+	<script src="run_workflow.bds.20160708_135926_840.dag.js"></script>
+</head>
+<body>
+
+<div class="container" id="summary">
+	<h2 class="bs-featurette-title"> BigDataScript report: run_workflow.bds </h2>
+	
+	<table class="table table-striped">
+		<tr> <th> Script file </th><td> ./run_workflow.bds </td></tr>
+		<tr> <th> Program ID </th><td> run_workflow.bds.20160708_135926_840 </td></tr>
+		<tr> <th> Start time </th><td> 2016-07-08 13:59:26 </td></tr>
+		<tr> <th> Run time </th><td> 00:00:16.880 </td></tr>
+		<tr> <th> Tasks executed </th><td> 4 </td></tr>
+		<tr> <th> Tasks failed </th><td> 0 </td></tr>
+		<tr> <th> Tasks failed names </th><td> <pre></pre> </td></tr>
+		<tr> <th> Arguments* </th><td> [] </td></tr>
+		<tr> <th> System* </th><td> local </td></tr>
+		<tr> <th> Cpus* </th><td> 1 </td></tr>
+		<tr> <th> Exit value </th><td  > 0 </td></tr>
+	</table>
+	<b>*</b> Values in global scope when program finished execution.
+</div>
+
+<div class="container" id="bdsTimeLine">
+	<h2 class="bs-featurette-title"> Timeline </h2>
+	<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
+	<script type="text/javascript">
+	google.setOnLoadCallback(drawChart);
+	
+	function drawChart() {
+	  var container = document.getElementById('bdsTimeline');
+	
+	  var chart = new google.visualization.Timeline(container);
+	
+	  var dataTable = new google.visualization.DataTable();
+	
+	  dataTable.addColumn({ type: 'string', id: 'TaskName' });
+	  dataTable.addColumn({ type: 'string', id: 'TaskHint' });
+	  dataTable.addColumn({ type: 'date', id: 'Start' });
+	  dataTable.addColumn({ type: 'date', id: 'End' });
+	
+	  dataTable.addRows([
+	    [ 'task.run_workflow.line_19.id_1', 'bwa mem -t 2 ./reference/hs_ref_GRCh37.p5_chr17.fa ./example_data/brca.example.illumina.0.1.fastq ./example_data/brca.example.illumina.0.2.fastq > ./e', new Date(2016,6,08,13,59,27), new Date(2016,6,08,13,59,34) ],
+	    [ 'task.run_workflow.line_24.id_2', 'samtools view -bS ./example_data/brca.example.illumina.sam | samtools sort > ./example_data/brca.example.illumina.bam', new Date(2016,6,08,13,59,34), new Date(2016,6,08,13,59,36) ],
+	    [ 'task.run_workflow.line_28.id_3', 'samtools index ./example_data/brca.example.illumina.bam ./example_data/brca.example.illumina.bai', new Date(2016,6,08,13,59,36), new Date(2016,6,08,13,59,36) ],
+	    [ 'task.run_workflow.line_32.id_4', 'samtools mpileup -uf ./reference/hs_ref_GRCh37.p5_chr17.fa ./example_data/brca.example.illumina.bam | bcftools view > ./example_data/brca.example.illu', new Date(2016,6,08,13,59,37), new Date(2016,6,08,13,59,43) ],
+	    ]);
+	
+	  var options = {
+	    timeline: { groupByRowLabel: false }
+	  };
+	  
+	  chart.draw(dataTable, options);
+	}
+	</script>
+	<div id="bdsTimeline" style="width: 900px; height: 252px;"></div>
+</div>
+
+<div class="container" id="taskDag">
+	<h2 class="bs-featurette-title"> Task Graph </h2>
+	<div class="container" id="cy" style="height: 100%; width: 100%; border: solid 1px black""></div>
+</div>
+
+<div class="container" id="threadDetails">
+	<h2 class="bs-featurette-title"> Parallel (threads) details </h2>
+	<table class="table table-striped">
+    <tr> <th> Thread ID    </th> <th> Parent           </th>	<th> Tasks </th> </tr>
+	<tr> <td> thread_Root </td> <td> None </td>	<td> <pre> run_workflow.bds.20160708_135926_840/task.run_workflow.line_19.id_1
+run_workflow.bds.20160708_135926_840/task.run_workflow.line_24.id_2
+run_workflow.bds.20160708_135926_840/task.run_workflow.line_28.id_3
+run_workflow.bds.20160708_135926_840/task.run_workflow.line_32.id_4
+ </pre> </td> </tr>
+	</table>
+</div>
+
+<div class="container" id="taskDetails">
+	<h2 class="bs-featurette-title"> Task details </h2>
+	<table class="table table-striped">
+    <tr> <th> Task </th>            <th> Execution </th>            <th> Time </th> <th> Dependencies </th>     <th> Task program, Errors, StdOut / StdErr </th> </tr>
+    <tr> <td> <table class="table"> <tr> <th> Num </th> <td> 1 </td> </tr> <tr> <th> ID </th> <td> task.run_workflow.line_19.id_1 </td> </tr> <tr> <th> Name </th> <td> task.run_workflow.line_19.id_1 </td></tr> <tr> <th> Thread </th> <td> thread_Root </td> </tr> <tr> <th> PID </th> <td> 2628 </td> </tr> </table> </td> <td > <table class="table"> <tr> <th> OK </th> <td> true </td>  </tr> <tr> <th> Exit Code </th> <td> 0 </td>  </tr> <tr> <th> Retries </th> <td>  </td></tr> <tr> <th> State </th> <td> FINISHED </td> </tr> <tr> <th> Dep. </th> <td> OK </td> </tr> <tr> <th> Cpus </th> <td>  2 </td></tr> <tr> <th> Mem </th> <td>  </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Start </th> <td> 2016-07-08 13:59:27 </td> </tr> <tr> <th> End </th> <td> 2016-07-08 13:59:34 </td> </tr> <tr> <th> Elapsed </th> <td> 00:00:06 </td> </tr> <tr> <th> Timeout</th> <td> 1 day </td></tr> <tr> <th> Wall Timeout </th><td>  1 day </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Input files</th> <td> /home/xiu/workspace/mytest/LearnBDS/./reference/hs_ref_GRCh37.p5_chr17.fa.ann
+/home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.0.1.fastq
+/home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.0.2.fastq
+ </td>  </tr> <tr> <th> Output files </th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.sam
+ </td> </tr> <tr> <th> Dependencies </th> <td>  </td> </tr> </table> </td> <td> <pre> 
+# SYS command. line 20
+
+ bwa mem -t 2 ./reference/hs_ref_GRCh37.p5_chr17.fa ./example_data/brca.example.illumina.0.1.fastq ./example_data/brca.example.illumina.0.2.fastq > ./example_data/brca.example.illumina.sam
+ </pre> <pre>    
+--------------------Stderr--------------------
+[M::mem_pestat] (25, 50, 75) percentile: (500, 584, 682)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (136, 1046)
+[M::mem_pestat] mean and std.dev: (596.73, 134.41)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 1228)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_process_seqs] Processed 63424 reads in 9.976 CPU sec, 4.992 real sec
+[main] Version: 0.7.15-r1142-dirty
+[main] CMD: bwa mem -t 2 ./reference/hs_ref_GRCh37.p5_chr17.fa ./example_data/brca.example.illumina.0.1.fastq ./example_data/brca.example.illumina.0.2.fastq
+[main] Real time: 6.931 sec; CPU: 10.344 sec
+
+ </pre> </td> </tr>
+    <tr> <td> <table class="table"> <tr> <th> Num </th> <td> 2 </td> </tr> <tr> <th> ID </th> <td> task.run_workflow.line_24.id_2 </td> </tr> <tr> <th> Name </th> <td> task.run_workflow.line_24.id_2 </td></tr> <tr> <th> Thread </th> <td> thread_Root </td> </tr> <tr> <th> PID </th> <td> 2645 </td> </tr> </table> </td> <td > <table class="table"> <tr> <th> OK </th> <td> true </td>  </tr> <tr> <th> Exit Code </th> <td> 0 </td>  </tr> <tr> <th> Retries </th> <td>  </td></tr> <tr> <th> State </th> <td> FINISHED </td> </tr> <tr> <th> Dep. </th> <td> OK </td> </tr> <tr> <th> Cpus </th> <td>  1 </td></tr> <tr> <th> Mem </th> <td>  </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Start </th> <td> 2016-07-08 13:59:34 </td> </tr> <tr> <th> End </th> <td> 2016-07-08 13:59:36 </td> </tr> <tr> <th> Elapsed </th> <td> 00:00:01 </td> </tr> <tr> <th> Timeout</th> <td> 1 day </td></tr> <tr> <th> Wall Timeout </th><td>  1 day </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Input files</th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.sam
+ </td>  </tr> <tr> <th> Output files </th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.bam
+ </td> </tr> <tr> <th> Dependencies </th> <td> task.run_workflow.line_19.id_1
+task.run_workflow.line_19.id_1
+ </td> </tr> </table> </td> <td> <pre> 
+# SYS command. line 25
+
+ samtools view -bS ./example_data/brca.example.illumina.sam | samtools sort > ./example_data/brca.example.illumina.bam
+ </pre> <pre>     </pre> </td> </tr>
+    <tr> <td> <table class="table"> <tr> <th> Num </th> <td> 3 </td> </tr> <tr> <th> ID </th> <td> task.run_workflow.line_28.id_3 </td> </tr> <tr> <th> Name </th> <td> task.run_workflow.line_28.id_3 </td></tr> <tr> <th> Thread </th> <td> thread_Root </td> </tr> <tr> <th> PID </th> <td> 2657 </td> </tr> </table> </td> <td > <table class="table"> <tr> <th> OK </th> <td> true </td>  </tr> <tr> <th> Exit Code </th> <td> 0 </td>  </tr> <tr> <th> Retries </th> <td>  </td></tr> <tr> <th> State </th> <td> FINISHED </td> </tr> <tr> <th> Dep. </th> <td> OK </td> </tr> <tr> <th> Cpus </th> <td>  1 </td></tr> <tr> <th> Mem </th> <td>  </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Start </th> <td> 2016-07-08 13:59:36 </td> </tr> <tr> <th> End </th> <td> 2016-07-08 13:59:36 </td> </tr> <tr> <th> Elapsed </th> <td> 00:00:00 </td> </tr> <tr> <th> Timeout</th> <td> 1 day </td></tr> <tr> <th> Wall Timeout </th><td>  1 day </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Input files</th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.bam
+ </td>  </tr> <tr> <th> Output files </th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.bai
+ </td> </tr> <tr> <th> Dependencies </th> <td> task.run_workflow.line_24.id_2
+task.run_workflow.line_24.id_2
+ </td> </tr> </table> </td> <td> <pre> 
+# SYS command. line 29
+
+ samtools index ./example_data/brca.example.illumina.bam ./example_data/brca.example.illumina.bai
+ </pre> <pre>     </pre> </td> </tr>
+    <tr> <td> <table class="table"> <tr> <th> Num </th> <td> 4 </td> </tr> <tr> <th> ID </th> <td> task.run_workflow.line_32.id_4 </td> </tr> <tr> <th> Name </th> <td> task.run_workflow.line_32.id_4 </td></tr> <tr> <th> Thread </th> <td> thread_Root </td> </tr> <tr> <th> PID </th> <td> 2668 </td> </tr> </table> </td> <td > <table class="table"> <tr> <th> OK </th> <td> true </td>  </tr> <tr> <th> Exit Code </th> <td> 0 </td>  </tr> <tr> <th> Retries </th> <td>  </td></tr> <tr> <th> State </th> <td> FINISHED </td> </tr> <tr> <th> Dep. </th> <td> OK </td> </tr> <tr> <th> Cpus </th> <td>  1 </td></tr> <tr> <th> Mem </th> <td>  </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Start </th> <td> 2016-07-08 13:59:37 </td> </tr> <tr> <th> End </th> <td> 2016-07-08 13:59:43 </td> </tr> <tr> <th> Elapsed </th> <td> 00:00:06 </td> </tr> <tr> <th> Timeout</th> <td> 1 day </td></tr> <tr> <th> Wall Timeout </th><td>  1 day </td></tr> </table> </td> <td> <table class="table"> <tr> <th> Input files</th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.bai
+/home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.bam
+/home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.sam
+/home/xiu/workspace/mytest/LearnBDS/./reference/hs_ref_GRCh37.p5_chr17.fa
+ </td>  </tr> <tr> <th> Output files </th> <td> /home/xiu/workspace/mytest/LearnBDS/./example_data/brca.example.illumina.vcf
+ </td> </tr> <tr> <th> Dependencies </th> <td> task.run_workflow.line_28.id_3
+task.run_workflow.line_24.id_2
+task.run_workflow.line_19.id_1
+task.run_workflow.line_28.id_3
+task.run_workflow.line_24.id_2
+task.run_workflow.line_19.id_1
+ </td> </tr> </table> </td> <td> <pre> 
+# SYS command. line 33
+
+ samtools mpileup -uf ./reference/hs_ref_GRCh37.p5_chr17.fa ./example_data/brca.example.illumina.bam | bcftools view > ./example_data/brca.example.illumina.vcf
+ </pre> <pre>    
+--------------------Stderr--------------------
+[mpileup] 1 samples in 1 input files
+<mpileup> Set max per-file depth to 8000
+
+ </pre> </td> </tr>
+	</table>
+</div>
+
+<div class="container" id="scope">
+	<h2 class="bs-featurette-title"> Global scope </h2>
+	<b>Note:</b> Global scope when program finished execution.
+	<table class="table table-striped">
+	<tr> <th> Type </th><th> Name </th><th> Value </th> </tr>
+	<tr> <td> string </td><td> _ </td><td> ./run_workflow.bds </td> </tr>
+	<tr> <td> bool </td><td> allowEmpty </td><td> false </td> </tr>
+	<tr> <td> string[] </td><td> args </td><td> [] </td> </tr>
+	<tr> <td> bool </td><td> canFail </td><td> false </td> </tr>
+	<tr> <td> string </td><td> CLUTTER_IM_MODULE </td><td> xim </td> </tr>
+	<tr> <td> string </td><td> COMPIZ_BIN_PATH </td><td> /usr/bin/ </td> </tr>
+	<tr> <td> string </td><td> COMPIZ_CONFIG_PROFILE </td><td> ubuntu </td> </tr>
+	<tr> <td> int </td><td> cpus </td><td> 1 </td> </tr>
+	<tr> <td> int </td><td> cpusLocal </td><td> 4 </td> </tr>
+	<tr> <td> int </td><td> day </td><td> 86400 </td> </tr>
+	<tr> <td> string </td><td> DBUS_SESSION_BUS_ADDRESS </td><td> unix:abstract=/tmp/dbus-bsuFvTKqY3 </td> </tr>
+	<tr> <td> string </td><td> DEFAULTS_PATH </td><td> /usr/share/gconf/ubuntu.default.path </td> </tr>
+	<tr> <td> string </td><td> DESKTOP_SESSION </td><td> ubuntu </td> </tr>
+	<tr> <td> string </td><td> DISPLAY </td><td> :0 </td> </tr>
+	<tr> <td> real </td><td> E </td><td> 2.718281828459045 </td> </tr>
+	<tr> <td> int </td><td> G </td><td> 1073741824 </td> </tr>
+	<tr> <td> string </td><td> GDM_LANG </td><td> en_US </td> </tr>
+	<tr> <td> string </td><td> GDMSESSION </td><td> ubuntu </td> </tr>
+	<tr> <td> string </td><td> GNOME_DESKTOP_SESSION_ID </td><td> this-is-deprecated </td> </tr>
+	<tr> <td> string </td><td> GNOME_KEYRING_CONTROL </td><td>  </td> </tr>
+	<tr> <td> string </td><td> GNOME_KEYRING_PID </td><td>  </td> </tr>
+	<tr> <td> string </td><td> GPG_AGENT_INFO </td><td> /home/xiu/.gnupg/S.gpg-agent:0:1 </td> </tr>
+	<tr> <td> string </td><td> GTK2_MODULES </td><td> overlay-scrollbar </td> </tr>
+	<tr> <td> string </td><td> GTK_IM_MODULE </td><td> ibus </td> </tr>
+	<tr> <td> string </td><td> GTK_MODULES </td><td> gail:atk-bridge:unity-gtk-module </td> </tr>
+	<tr> <td> string </td><td> HOME </td><td> /home/xiu </td> </tr>
+	<tr> <td> int </td><td> hour </td><td> 3600 </td> </tr>
+	<tr> <td> string </td><td> IM_CONFIG_PHASE </td><td> 1 </td> </tr>
+	<tr> <td> string </td><td> INSTANCE </td><td>  </td> </tr>
+	<tr> <td> string </td><td> JOB </td><td> unity-settings-daemon </td> </tr>
+	<tr> <td> int </td><td> K </td><td> 1024 </td> </tr>
+	<tr> <td> string </td><td> LANG </td><td> en_US.UTF-8 </td> </tr>
+	<tr> <td> string </td><td> LANGUAGE </td><td> en_US </td> </tr>
+	<tr> <td> string </td><td> LESSCLOSE </td><td> /usr/bin/lesspipe %s %s </td> </tr>
+	<tr> <td> string </td><td> LESSOPEN </td><td> | /usr/bin/lesspipe %s </td> </tr>
+	<tr> <td> string </td><td> LOGNAME </td><td> xiu </td> </tr>
+	<tr> <td> string </td><td> LS_COLORS </td><td> rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36: </td> </tr>
+	<tr> <td> int </td><td> M </td><td> 1048576 </td> </tr>
+	<tr> <td> string </td><td> MANDATORY_PATH </td><td> /usr/share/gconf/ubuntu.mandatory.path </td> </tr>
+	<tr> <td> int </td><td> mem </td><td> -1 </td> </tr>
+	<tr> <td> int </td><td> minute </td><td> 60 </td> </tr>
+	<tr> <td> string </td><td> NLSPATH </td><td> /usr/dt/lib/nls/msg/%L/%N.cat </td> </tr>
+	<tr> <td> string </td><td> node </td><td>  </td> </tr>
+	<tr> <td> string </td><td> OLDPWD </td><td> /home/xiu/workspace/mytest/LearnBDS/example_data </td> </tr>
+	<tr> <td> int </td><td> P </td><td> 1125899906842624 </td> </tr>
+	<tr> <td> string </td><td> PATH </td><td> /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/xiu/.bds/:/home/xiu/tools/bwa/:/home/xiu/tools/samtools-1.3.1/:/home/xiu/tools/bcftools-1.3.1/:/home/xiu/tools/IGV_2.3.78/ </td> </tr>
+	<tr> <td> real </td><td> PI </td><td> 3.141592653589793 </td> </tr>
+	<tr> <td> string </td><td> ppwd </td><td> /home/xiu/workspace/mytest/LearnBDS </td> </tr>
+	<tr> <td> string </td><td> programName </td><td> run_workflow.bds </td> </tr>
+	<tr> <td> string </td><td> programPath </td><td> ./run_workflow.bds </td> </tr>
+	<tr> <td> string </td><td> PWD </td><td> /home/xiu/workspace/mytest/LearnBDS </td> </tr>
+	<tr> <td> string </td><td> QT4_IM_MODULE </td><td> xim </td> </tr>
+	<tr> <td> string </td><td> QT_ACCESSIBILITY </td><td> 1 </td> </tr>
+	<tr> <td> string </td><td> QT_IM_MODULE </td><td> ibus </td> </tr>
+	<tr> <td> string </td><td> QT_LINUX_ACCESSIBILITY_ALWAYS_ON </td><td> 1 </td> </tr>
+	<tr> <td> string </td><td> QT_QPA_PLATFORMTHEME </td><td> appmenu-qt5 </td> </tr>
+	<tr> <td> string </td><td> queue </td><td>  </td> </tr>
+	<tr> <td> int </td><td> retry </td><td> 0 </td> </tr>
+	<tr> <td> string </td><td> SESSION </td><td> ubuntu </td> </tr>
+	<tr> <td> string </td><td> SESSIONTYPE </td><td> gnome-session </td> </tr>
+	<tr> <td> string </td><td> SHELL </td><td> /bin/bash </td> </tr>
+	<tr> <td> string </td><td> SHLVL </td><td> 1 </td> </tr>
+	<tr> <td> string </td><td> SSH_AUTH_SOCK </td><td> /run/user/1000/keyring/ssh </td> </tr>
+	<tr> <td> string </td><td> system </td><td> local </td> </tr>
+	<tr> <td> int </td><td> T </td><td> 1099511627776 </td> </tr>
+	<tr> <td> string </td><td> TERM </td><td> xterm-256color </td> </tr>
+	<tr> <td> int </td><td> timeout </td><td> 86400 </td> </tr>
+	<tr> <td> string </td><td> UPSTART_EVENTS </td><td> xsession started </td> </tr>
+	<tr> <td> string </td><td> UPSTART_INSTANCE </td><td>  </td> </tr>
+	<tr> <td> string </td><td> UPSTART_JOB </td><td> unity7 </td> </tr>
+	<tr> <td> string </td><td> UPSTART_SESSION </td><td> unix:abstract=/com/ubuntu/upstart-session/1000/1070 </td> </tr>
+	<tr> <td> string </td><td> USER </td><td> xiu </td> </tr>
+	<tr> <td> string </td><td> VTE_VERSION </td><td> 4205 </td> </tr>
+	<tr> <td> int </td><td> walltimeout </td><td> 86400 </td> </tr>
+	<tr> <td> int </td><td> week </td><td> 604800 </td> </tr>
+	<tr> <td> string </td><td> WINDOWID </td><td> 65011722 </td> </tr>
+	<tr> <td> string </td><td> XAUTHORITY </td><td> /home/xiu/.Xauthority </td> </tr>
+	<tr> <td> string </td><td> XDG_CONFIG_DIRS </td><td> /etc/xdg/xdg-ubuntu:/usr/share/upstart/xdg:/etc/xdg </td> </tr>
+	<tr> <td> string </td><td> XDG_CURRENT_DESKTOP </td><td> Unity </td> </tr>
+	<tr> <td> string </td><td> XDG_DATA_DIRS </td><td> /usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop </td> </tr>
+	<tr> <td> string </td><td> XDG_GREETER_DATA_DIR </td><td> /var/lib/lightdm-data/xiu </td> </tr>
+	<tr> <td> string </td><td> XDG_RUNTIME_DIR </td><td> /run/user/1000 </td> </tr>
+	<tr> <td> string </td><td> XDG_SEAT </td><td> seat0 </td> </tr>
+	<tr> <td> string </td><td> XDG_SEAT_PATH </td><td> /org/freedesktop/DisplayManager/Seat0 </td> </tr>
+	<tr> <td> string </td><td> XDG_SESSION_DESKTOP </td><td> ubuntu </td> </tr>
+	<tr> <td> string </td><td> XDG_SESSION_ID </td><td> c2 </td> </tr>
+	<tr> <td> string </td><td> XDG_SESSION_PATH </td><td> /org/freedesktop/DisplayManager/Session0 </td> </tr>
+	<tr> <td> string </td><td> XDG_SESSION_TYPE </td><td> x11 </td> </tr>
+	<tr> <td> string </td><td> XDG_VTNR </td><td> 7 </td> </tr>
+	<tr> <td> string </td><td> XFILESEARCHPATH </td><td> /usr/dt/app-defaults/%L/Dt </td> </tr>
+	<tr> <td> string </td><td> XMODIFIERS </td><td> @im=ibus </td> </tr>
+	</table>
+</div>
+
+</body>
+

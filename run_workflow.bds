@@ -4,31 +4,41 @@ fa1 := "./example_data/brca.example.illumina.0.1.fastq" help Fasta file 1
 fa2 := "./example_data/brca.example.illumina.0.2.fastq" help Fasta file 2
 ref := "./reference/hs_ref_GRCh37.p5_chr17.fa"  help Reference file
 
-idx := "$ref.ann"
-sam := fa1.swapExt('0.1.fastq', 'sam')
-bam := fa1.swapExt('0.1.fastq', 'bam')
-vcf := fa1.swapExt('0.1.fastq', 'vcf')
-index := fa1.swapExt('0.1.fastq', 'bai')
-
 # println "fa1 = $fa1"
 
-task ( idx <- ref ) {
-  sys bwa index $ref
+void fromfatovcf(string fa1, string fa2, string ref) {
+	idx := "$ref.ann"
+	sam := fa1.swapExt('0.1.fastq', 'sam')
+	bam := fa1.swapExt('0.1.fastq', 'bam')
+	vcf := fa1.swapExt('0.1.fastq', 'vcf')
+	index := fa1.swapExt('0.1.fastq', 'bai')
+
+	task ( idx <- ref ) {
+		sys bwa index $ref
+	}
+
+	task ( sam <- [idx, fa1, fa2]  , cpus := 2) {
+  		sys bwa mem -t 2 $ref $fa1 $fa2 > $sam
+	}
+
+	task ( bam <- sam ) {
+  		sys samtools view -bS $sam | samtools sort > $bam
+	}
+
+	task ( index <- bam ) {
+  		sys samtools index $bam $index
+	}
+
+	task ( vcf <- [index, bam, sam, ref] ) {
+  		sys samtools mpileup -uf $ref $bam | bcftools view > $vcf
+	}
 }
 
-task ( sam <- [idx, fa1, fa2]  , cpus := 2) {
-  sys bwa mem -t 2 $ref $fa1 $fa2 > $sam
-}
+# fromfatovcf (fa1, fa2, ref)
 
 
-task ( bam <- sam ) {
-  sys samtools view -bS $sam | samtools sort > $bam
-}
 
-task ( index <- bam ) {
-  sys samtools index $bam $index
-}
 
-task ( vcf <- [index, bam, sam, ref] ) {
-  sys samtools mpileup -uf $ref $bam | bcftools view > $vcf
-}
+
+
+
