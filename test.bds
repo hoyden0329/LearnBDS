@@ -5,7 +5,6 @@ include 'run_workflow'
 string{} createmapfromfile (string filename) {
 	string{} map
 	for (string line : filename.readLines()) {
-#		print ("$line\n")
 		if (!line.startsWith("\#")) {
 			string[] columns = line.split("\t")
 			if ( !map.hasKey(columns[1]) ) {
@@ -30,32 +29,21 @@ int[] compvcf(string resfile, string expectfile){
 	if ( expectfile.canRead() ) {
 		print ("Valid expect vcf file\n")
 	} else printErr ("Cannot find valid expected vcf file! \n")
-#	string[] expect = expectfile.readLines()
 	string{} resmap = createmapfromfile (resfile)
 	for ( string line : expectfile.readLines() ) { 
-#		print ("$line\n") 
 		string[] columns = line.split("\t")
-#		print ("$columns[0] $columns[1] $columns[2]\n")
 		if ( resmap.hasKey(columns[0]) ) {
 			string value = resmap{columns[0]}
-#			print ("$value\n")
 			string expValue = columns[1] + ">" + columns[2]
-#			print ("$expValue\n")
 			int changefound = 0
 			for ( string cval : value.split(",") ) {
-#				print ("$cval\n")
 				if ( cval.startsWith(expValue) ) {
 					success = success + 1
 					changefound = 1
 					break
 				}	
 }
-#			string[] valuearray = value.split("|")
-#			if ( valuearray.has(expValue) ){
-#				success = success + 1
-#			}
 			if (changefound == 0) {
-#			else {
 				fail_no_change = fail_no_change + 1
 				print ("Pos $columns[0] Mutation identified $value Expected mutation $expValue\n")
 			}
@@ -65,8 +53,6 @@ int[] compvcf(string resfile, string expectfile){
 		}
 	}	
 
-#	string[] array = ["one", "two", "three"]
-#	for( string val : array ) { print("Value: $val\n") }
 	int[] resarray = [success, fail_no_change, fail_no_position]
 	return( resarray )
 }
@@ -80,14 +66,10 @@ void test02() {
 	expectfile := "./example_data/brca.example.illumina.0.expected.vcf"
 	expectfileReform := expectfile.swapExt(".vcf", ".txt")
 	sys grep chr17 $expectfile | cut -f 2,4,5 > $expectfileReform
-    vcf := fa1.swapExt('0.1.fastq', 'vcf')
 
 	print ("Set up the the groud truth file = $expectfile \n")
-#	sys array=($(grep chr17 $expectfile | cut -f 2)); \
-#		 for i in "${!array[@]}"; do  echo "${array[i]}"; done
-	fromfatovcf(fa1, fa2, ref)
+	vcf := fromfatovcf(fa1, fa2, ref)
 	resarray := compvcf(vcf, expectfileReform)
-#	print ("$resarray[0] $resarray[1] $resarray[2]\n")
 	if ( resarray[2] > 0 ) error ("Test failed with $resarray[2] positions not found with expected mutations.\n")
 	if ( resarray[1] > 0 ) warning ("Warning: with $resarray[1] mutations not concord with expected mutations. \n")
 }

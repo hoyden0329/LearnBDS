@@ -4,9 +4,8 @@ fa1 := "./example_data/brca.example.illumina.0.1.fastq" help Fasta file 1
 fa2 := "./example_data/brca.example.illumina.0.2.fastq" help Fasta file 2
 ref := "./reference/hs_ref_GRCh37.p5_chr17.fa"  help Reference file
 
-# println "fa1 = $fa1"
 
-void fromfatovcf(string fa1, string fa2, string ref) {
+string fromfatovcf(string fa1, string fa2, string ref) {
 	idx := "$ref.ann"
 	sam := fa1.swapExt('0.1.fastq', 'sam')
 	bam := fa1.swapExt('0.1.fastq', 'bam')
@@ -32,9 +31,10 @@ void fromfatovcf(string fa1, string fa2, string ref) {
 	task ( vcf <- [index, bam, sam, ref] ) {
   		sys samtools mpileup -uf $ref $bam | bcftools view > $vcf
 	}
+
+	return ( vcf )
 }
 
-# fromfatovcf (fa1, fa2, ref)
 
 
 
