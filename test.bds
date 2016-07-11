@@ -65,7 +65,7 @@ void test02() {
 	print ("Now lets get serious!\n")
 	expectfile := "./example_data/brca.example.illumina.0.expected.vcf"
 	expectfileReform := expectfile.swapExt(".vcf", ".txt")
-	sys grep chr17 $expectfile | cut -f 2,4,5 > $expectfileReform
+	sys grep ^chr17 $expectfile | cut -f 2,4,5 > $expectfileReform
 
 	print ("Set up the the groud truth file = $expectfile \n")
 	vcf := fromfatovcf(fa1, fa2, ref)
@@ -74,4 +74,4 @@ void test02() {
 	if ( resarray[1] > 0 ) warning ("Warning: with $resarray[1] mutations not concord with expected mutations. \n")
 }
 
-
+# Next step: how to use assert function to make the comparison between two files easier? 
